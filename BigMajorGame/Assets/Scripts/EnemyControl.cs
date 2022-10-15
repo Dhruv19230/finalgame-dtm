@@ -168,6 +168,8 @@ private void EnemyShoot()//Enemy Shooting
     }
   
 }
+
+/*This bool methods are checked ground hit or not*/
    private bool IsGround()
    {
       return Physics2D.Raycast(transform.position,Vector2.down,4f,groundLayer);//Check ground
@@ -202,9 +204,10 @@ private bool IsPlayerIsNear()
    
     
 
+
   private void OnCollisionEnter2D(Collision2D other)
     {
-         if(other.gameObject.tag == "Enemy")
+         if(other.gameObject.tag == "Enemy") 
          {
             _rb.gravityScale = 0;
             GetComponent<CapsuleCollider2D>().isTrigger = true;         
@@ -213,9 +216,10 @@ private bool IsPlayerIsNear()
          
    }
 
+
    private void OnTriggerEnter2D(Collider2D other) 
    {
-       if(other.gameObject.tag == "PlayerLaser")
+       if(other.gameObject.tag == "PlayerLaser")//Enemy is hit player Laser Enemy is destroy
          {
             FindObjectOfType<AudioManeger>().Play("EnemyDestroy");
              Destroy(this.gameObject);

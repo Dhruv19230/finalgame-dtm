@@ -10,8 +10,12 @@ public class MainCamera : MonoBehaviour
     Vector3 
     offset; 
 
+    /*if canfollow is true camera is follow player
+    if it is not not follow*/
+
   private void Start() 
   {
+    /*This method get player and camera position and get space both object*/
      offset = transform.position - player.transform.position;   // Get Offset and Casmera
      canFollow = true;
   } 

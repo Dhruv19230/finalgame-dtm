@@ -64,10 +64,12 @@ public class PlayerControl : MonoBehaviour
       
         
      } 
-
+   
+     //This Method get player Inputs
+     
      private void GetKeyBoardInputAndControls()//Assign Keyboard Inputs
      {
-          horizontalInput = Input.GetAxis("Horizontal");// Get WASD or ArrowKeys Inputs
+          horizontalInput = Input.GetAxis("Horizontal");// Get AD or ArrowKeys Inputs
 
           if(horizontalInput > 0)
           {
@@ -90,7 +92,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("isWalk",false);
           }
 
-         if(Input.GetKeyDown(KeyCode.Space))// press Space
+         if(Input.GetKeyDown(KeyCode.W))// press W
          {
             if(IsGround())//If player is Ground
             {
@@ -99,13 +101,13 @@ public class PlayerControl : MonoBehaviour
            
          }
 
-         if(Input.GetMouseButton(0)) //Press Mouse Button
+         if(Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space)) //Press Mouse Button or space Button to shoot
          {
             _canFire = true;// Can Fire
             
              
          }
-         else if(Input.GetMouseButtonUp(0))//Mouse Button Up
+         else if(Input.GetMouseButtonUp(0)||Input.GetKeyUp(KeyCode.Space))//Mouse Button Up
          {
             _canFire = false;
          }
@@ -183,10 +185,14 @@ public class PlayerControl : MonoBehaviour
      }
 
 
+    
+
+
      private void OnTriggerEnter2D(Collider2D other) 
      {
         if(other.CompareTag("Collectable"))
         {
+            /*player is hit collatable item  call score up method and destory collectable item*/
             FindObjectOfType<AudioManeger>().Play("CollectSound");
             FindObjectOfType<LevelManeger>().ScoreUP();
             Destroy(other.gameObject);
@@ -194,13 +200,14 @@ public class PlayerControl : MonoBehaviour
         }
         else if(other.CompareTag("EnemyLaser"))
         {
-            FindObjectOfType<LevelManeger>().LifeDiscrease();
+            FindObjectOfType<LevelManeger>().LifeDiscrease();//hit enemy laser to player call life dicrease method
         }
 
       
 
        else if(other.gameObject.tag == "Rocket")
          {
+            /*Player is hit rocket rocket can launch*/
             FindObjectOfType<MainCamera>().canFollow = false;//Disble camera Follow
             other.gameObject.GetComponent<Rocket>().canLaunched =true;//Enable Rocket Launch
             GetComponent<SpriteRenderer>().enabled = false;//Player Hide
@@ -210,6 +217,8 @@ public class PlayerControl : MonoBehaviour
          }
          else if(other.gameObject.tag == "DeadLine")
          {
+            /*Deadline game object is attach with Camera
+            Player is hit Deadline call game Over panel*/
             FindObjectOfType<MainCamera>().canFollow = false;//Disble camera Follow
             GetComponent<SpriteRenderer>().enabled = false;//Player Hide
             canControl = false;//Disble Control
@@ -220,6 +229,7 @@ public class PlayerControl : MonoBehaviour
 
      private void OnCollisionEnter2D(Collision2D other) 
      {
+        /* Enemy is Hit player call to levelmanger script life dicrease*/
          if(other.gameObject.tag == "Enemy")
          {
               FindObjectOfType<LevelManeger>().LifeDiscrease();

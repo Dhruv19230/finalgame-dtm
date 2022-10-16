@@ -22,7 +22,7 @@ public class LevelManeger : MonoBehaviour
     {
        scoreTextValue.text = score.ToString();
        lastScoreShow.text = score.ToString();
-       life = 3;// life = 3
+       life = 5;// life = 5
        LifeTextValue.text = life.ToString();
        Time.timeScale = 1;
 

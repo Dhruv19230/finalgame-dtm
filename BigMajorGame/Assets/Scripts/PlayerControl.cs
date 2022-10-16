@@ -92,7 +92,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("isWalk",false);
           }
 
-         if(Input.GetKeyDown(KeyCode.W))// press W
+         if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.UpArrow))// press W
          {
             if(IsGround())//If player is Ground
             {
@@ -117,15 +117,15 @@ public class PlayerControl : MonoBehaviour
      {
         if(_isGoLeft)
         {
-          if(IsGround()){
-            _rb.velocity = Vector2.left*moveSpeed;//Go Left
-          }
+          
+            _rb.velocity =new Vector2(-moveSpeed,_rb.velocity.y);//Go Left
+          
         }
         else if(_isGoright)
         {
-          if(IsGround()){
-            _rb.velocity = Vector2.right*moveSpeed;//Go Right
-          }
+          
+            _rb.velocity = new Vector2(moveSpeed,_rb.velocity.y);//Go Right
+          
         }
         else
         {
@@ -136,7 +136,7 @@ public class PlayerControl : MonoBehaviour
             else
             {
                _rb.velocity = new Vector2(_rb.velocity.x,_rb.velocity.y);
-            }                 
+            }                
         }
 
         if(_canJump)
